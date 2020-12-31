@@ -22,7 +22,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLSession;

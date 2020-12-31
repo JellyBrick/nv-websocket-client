@@ -16,12 +16,12 @@
 package com.neovisionaries.ws.client;
 
 
-import java.io.FilterInputStream;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 
-class WebSocketInputStream extends FilterInputStream
+class WebSocketInputStream extends BufferedInputStream
 {
     public WebSocketInputStream(InputStream in)
     {

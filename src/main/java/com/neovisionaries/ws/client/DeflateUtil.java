@@ -132,7 +132,7 @@ class DeflateUtil
                 default:
                     // Bad code length.
                     String message = String.format(
-                            "[%s] Bad code length '%d' at the bit index '%d'.",
+                            "[%s] Bad code length '%d' at the bit index '%s'.",
                             DeflateUtil.class.getSimpleName(), codeLength, Arrays.toString(bitIndex));
 
                     throw new FormatException(message);
