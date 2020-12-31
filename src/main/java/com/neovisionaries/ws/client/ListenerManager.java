@@ -24,7 +24,7 @@ import java.util.Map;
 class ListenerManager
 {
     private final WebSocket mWebSocket;
-    private final List<WebSocketListener> mListeners = new ArrayList<WebSocketListener>();
+    private final List<WebSocketListener> mListeners = new ArrayList<>();
 
     private boolean mSyncNeeded = true;
     private List<WebSocketListener> mCopiedListeners;
@@ -142,19 +142,16 @@ class ListenerManager
     {
         synchronized (mListeners)
         {
-            if (mSyncNeeded == false)
+            if (!mSyncNeeded)
             {
                 return mCopiedListeners;
             }
 
             // Copy mListeners to copiedListeners.
             List<WebSocketListener> copiedListeners =
-                    new ArrayList<WebSocketListener>(mListeners.size());
+                    new ArrayList<>(mListeners.size());
 
-            for (WebSocketListener listener : mListeners)
-            {
-                copiedListeners.add(listener);
-            }
+            copiedListeners.addAll(mListeners);
 
             // Synchronize.
             mCopiedListeners = copiedListeners;
@@ -606,7 +603,7 @@ class ListenerManager
         {
             listener.handleCallbackError(mWebSocket, cause);
         }
-        catch (Throwable t)
+        catch (Throwable ignored)
         {
         }
     }

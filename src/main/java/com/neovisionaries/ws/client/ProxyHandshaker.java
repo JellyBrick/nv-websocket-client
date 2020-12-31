@@ -174,7 +174,7 @@ class ProxyHandshaker
         }
 
         // If the status code is not "200".
-        if ("200".equals(elements[1]) == false)
+        if (!"200".equals(elements[1]))
         {
             throw new IOException(
                 "The status code in the response from the proxy server is not '200 Connection established'. " +

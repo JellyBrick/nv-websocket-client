@@ -83,11 +83,11 @@ final class OkHostnameVerifier implements HostnameVerifier {
    */
   private boolean verifyIpAddress(String ipAddress, X509Certificate certificate) {
     List<String> altNames = getSubjectAltNames(certificate, ALT_IPA_NAME);
-    for (int i = 0, size = altNames.size(); i < size; i++) {
-      if (ipAddress.equalsIgnoreCase(altNames.get(i))) {
-        return true;
+      for (String altName : altNames) {
+          if (ipAddress.equalsIgnoreCase(altName)) {
+              return true;
+          }
       }
-    }
     return false;
   }
 
@@ -98,12 +98,12 @@ final class OkHostnameVerifier implements HostnameVerifier {
     hostName = hostName.toLowerCase(Locale.US);
     boolean hasDns = false;
     List<String> altNames = getSubjectAltNames(certificate, ALT_DNS_NAME);
-    for (int i = 0, size = altNames.size(); i < size; i++) {
-      hasDns = true;
-      if (verifyHostName(hostName, altNames.get(i))) {
-        return true;
+      for (String altName : altNames) {
+          hasDns = true;
+          if (verifyHostName(hostName, altName)) {
+              return true;
+          }
       }
-    }
 
     if (!hasDns) {
       X500Principal principal = certificate.getSubjectX500Principal();
@@ -120,14 +120,14 @@ final class OkHostnameVerifier implements HostnameVerifier {
   public static List<String> allSubjectAltNames(X509Certificate certificate) {
     List<String> altIpaNames = getSubjectAltNames(certificate, ALT_IPA_NAME);
     List<String> altDnsNames = getSubjectAltNames(certificate, ALT_DNS_NAME);
-    List<String> result = new ArrayList<String>(altIpaNames.size() + altDnsNames.size());
+    List<String> result = new ArrayList<>(altIpaNames.size() + altDnsNames.size());
     result.addAll(altIpaNames);
     result.addAll(altDnsNames);
     return result;
   }
 
   private static List<String> getSubjectAltNames(X509Certificate certificate, int type) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new ArrayList<>();
     try {
       Collection<?> subjectAltNames = certificate.getSubjectAlternativeNames();
       if (subjectAltNames == null) {
@@ -240,13 +240,10 @@ final class OkHostnameVerifier implements HostnameVerifier {
 
     // Check that asterisk did not match across domain name labels.
     int suffixStartIndexInHostName = hostName.length() - suffix.length();
-    if ((suffixStartIndexInHostName > 0)
-        && (hostName.lastIndexOf('.', suffixStartIndexInHostName - 1) != -1)) {
-      // Asterisk is matching across domain name labels -- not permitted.
-      return false;
-    }
+    // Asterisk is matching across domain name labels -- not permitted.
+    return (suffixStartIndexInHostName <= 0)
+            || (hostName.lastIndexOf('.', suffixStartIndexInHostName - 1) == -1);
 
     // hostName matches pattern
-    return true;
   }
 }

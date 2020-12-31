@@ -31,7 +31,7 @@ class HandshakeBuilder
     private static final String RN = "\r\n";
 
 
-    private boolean mSecure;
+    private final boolean mSecure;
     private String mUserInfo;
     private final String mHost;
     private final String mPath;
@@ -72,7 +72,7 @@ class HandshakeBuilder
 
     public void addProtocol(String protocol)
     {
-        if (isValidProtocol(protocol) == false)
+        if (!isValidProtocol(protocol))
         {
             throw new IllegalArgumentException(
                 "'protocol' must be a non-empty string with characters in the range " +
@@ -86,7 +86,7 @@ class HandshakeBuilder
                 // 'LinkedHashSet' is used because the elements
                 // "MUST all be unique strings" and must be
                 // "ordered by preference. See RFC 6455, p18, 10.
-                mProtocols = new LinkedHashSet<String>();
+                mProtocols = new LinkedHashSet<>();
             }
 
             mProtocols.add(protocol);
@@ -175,7 +175,7 @@ class HandshakeBuilder
         {
             if (mExtensions == null)
             {
-                mExtensions = new ArrayList<WebSocketExtension>();
+                mExtensions = new ArrayList<>();
             }
 
             mExtensions.add(extension);
@@ -227,7 +227,7 @@ class HandshakeBuilder
                 return;
             }
 
-            List<WebSocketExtension> extensionsToRemove = new ArrayList<WebSocketExtension>();
+            List<WebSocketExtension> extensionsToRemove = new ArrayList<>();
 
             for (WebSocketExtension extension : mExtensions)
             {
@@ -321,7 +321,7 @@ class HandshakeBuilder
         {
             if (mHeaders == null)
             {
-                mHeaders = new ArrayList<String[]>();
+                mHeaders = new ArrayList<>();
             }
 
             mHeaders.add(new String[] { name, value });
@@ -343,7 +343,7 @@ class HandshakeBuilder
                 return;
             }
 
-            List<String[]> headersToRemove = new ArrayList<String[]>();
+            List<String[]> headersToRemove = new ArrayList<>();
 
             for (String[] header : mHeaders)
             {
@@ -431,7 +431,7 @@ class HandshakeBuilder
 
     public List<String[]> buildHeaders()
     {
-        List<String[]> headers = new ArrayList<String[]>();
+        List<String[]> headers = new ArrayList<>();
 
         // Host
         headers.add(new String[] { "Host", mHost } );
@@ -504,7 +504,7 @@ class HandshakeBuilder
             return null;
         }
 
-        Set<String> newProtocols = new LinkedHashSet<String>(protocols.size());
+        Set<String> newProtocols = new LinkedHashSet<>(protocols.size());
 
         newProtocols.addAll(protocols);
 
@@ -520,7 +520,7 @@ class HandshakeBuilder
         }
 
         List<WebSocketExtension> newExtensions =
-            new ArrayList<WebSocketExtension>(extensions.size());
+                new ArrayList<>(extensions.size());
 
         for (WebSocketExtension extension : extensions)
         {
@@ -538,7 +538,7 @@ class HandshakeBuilder
             return null;
         }
 
-        List<String[]> newHeaders = new ArrayList<String[]>(headers.size());
+        List<String[]> newHeaders = new ArrayList<>(headers.size());
 
         for (String[] header : headers)
         {

@@ -117,7 +117,7 @@ class Token
         {
             char ch = text.charAt(i);
 
-            if (ch == '\\' && escaped == false)
+            if (ch == '\\' && !escaped)
             {
                 escaped = true;
                 continue;

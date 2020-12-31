@@ -39,9 +39,9 @@ class ReadingThread extends WebSocketThread
 {
     private boolean mStopRequested;
     private WebSocketFrame mCloseFrame;
-    private List<WebSocketFrame> mContinuation = new ArrayList<WebSocketFrame>();
+    private final List<WebSocketFrame> mContinuation = new ArrayList<>();
     private final PerMessageCompressionExtension mPMCE;
-    private Object mCloseLock = new Object();
+    private final Object mCloseLock = new Object();
     private Timer mCloseTimer;
     private CloseTask mCloseTask;
     private long mCloseDelay;
@@ -107,7 +107,7 @@ class ReadingThread extends WebSocketThread
             // Handle the frame.
             boolean keepReading = handleFrame(frame);
 
-            if (keepReading == false)
+            if (!keepReading)
             {
                 break;
             }
@@ -268,7 +268,7 @@ class ReadingThread extends WebSocketThread
 
 
     /**
-     * Call {@link WebSocketListener#onBinaryMessage(WebSocket, String)
+     * Call {@link WebSocketListener#onBinaryMessage(WebSocket, byte[])}
      * onBinaryMessage} method of the listeners.
      */
     private void callOnBinaryMessage(byte[] message)
@@ -330,7 +330,7 @@ class ReadingThread extends WebSocketThread
     private WebSocketFrame readFrame()
     {
         WebSocketFrame frame = null;
-        WebSocketException wse = null;
+        WebSocketException wse;
 
         try
         {
@@ -471,7 +471,7 @@ class ReadingThread extends WebSocketThread
             }
         }
 
-        if (frame.getRsv1() == false)
+        if (!frame.getRsv1())
         {
             // No problem.
             return;
@@ -488,18 +488,13 @@ class ReadingThread extends WebSocketThread
      * See <a href="https://tools.ietf.org/html/rfc7692#section-6">6. Framing</a>
      * in <a href="https://tools.ietf.org/html/rfc7692">RFC 7692</a> for details.
      */
-    private boolean verifyReservedBit1ForPMCE(WebSocketFrame frame) throws WebSocketException
-    {
-        if (frame.isTextFrame() || frame.isBinaryFrame())
-        {
-            // The RSV1 of the first frame of a message is called
-            // "Per-Message Compressed" bit. It can be either 0 or 1.
-            // In other words, any value is okay.
-            return true;
-        }
+    private boolean verifyReservedBit1ForPMCE(WebSocketFrame frame) {
+        // The RSV1 of the first frame of a message is called
+        // "Per-Message Compressed" bit. It can be either 0 or 1.
+        // In other words, any value is okay.
+        return frame.isTextFrame() || frame.isBinaryFrame();
 
         // Further checking is required.
-        return false;
     }
 
 
@@ -508,7 +503,7 @@ class ReadingThread extends WebSocketThread
      */
     private void verifyReservedBit2(WebSocketFrame frame) throws WebSocketException
     {
-        if (frame.getRsv2() == false)
+        if (!frame.getRsv2())
         {
             // No problem.
             return;
@@ -525,7 +520,7 @@ class ReadingThread extends WebSocketThread
      */
     private void verifyReservedBit3(WebSocketFrame frame) throws WebSocketException
     {
-        if (frame.getRsv3() == false)
+        if (!frame.getRsv3())
         {
             // No problem.
             return;
@@ -611,7 +606,7 @@ class ReadingThread extends WebSocketThread
         if (frame.isControlFrame())
         {
             // If fragmented.
-            if (frame.getFin() == false)
+            if (!frame.getFin())
             {
                 // A control frame is fragmented.
                 throw new WebSocketException(
@@ -630,7 +625,7 @@ class ReadingThread extends WebSocketThread
         if (frame.isContinuationFrame())
         {
             // There must already exist a continuation sequence.
-            if (continuationExists == false)
+            if (!continuationExists)
             {
                 // A continuation frame was detected although a continuation had not started.
                 throw new WebSocketException(
@@ -657,7 +652,7 @@ class ReadingThread extends WebSocketThread
     private void verifyFrameSize(WebSocketFrame frame) throws WebSocketException
     {
         // If the frame is not a control frame.
-        if (frame.isControlFrame() == false)
+        if (!frame.isControlFrame())
         {
             // Nothing to check.
             return;
@@ -698,15 +693,8 @@ class ReadingThread extends WebSocketThread
             case INSUFFICENT_DATA:
             case INVALID_PAYLOAD_LENGTH:
             case NO_MORE_FRAME:
-                closeCode = WebSocketCloseCode.UNCONFORMED;
-                break;
 
-            case TOO_LONG_PAYLOAD:
-            case INSUFFICIENT_MEMORY_FOR_PAYLOAD:
-                closeCode = WebSocketCloseCode.OVERSIZE;
-                break;
-
-            // In this.verifyFrame(WebSocketFrame)
+                // In this.verifyFrame(WebSocketFrame)
 
             case NON_ZERO_RESERVED_BITS:
             case UNEXPECTED_RESERVED_BIT:
@@ -719,14 +707,17 @@ class ReadingThread extends WebSocketThread
                 closeCode = WebSocketCloseCode.UNCONFORMED;
                 break;
 
+            case TOO_LONG_PAYLOAD:
+            case INSUFFICIENT_MEMORY_FOR_PAYLOAD:
+                closeCode = WebSocketCloseCode.OVERSIZE;
+                break;
+
             // In this.readFrame()
 
             case INTERRUPTED_IN_READING:
             case IO_ERROR_IN_READING:
-                closeCode = WebSocketCloseCode.VIOLATED;
-                break;
 
-            // Others (unexpected)
+                // Others (unexpected)
 
             default:
                 closeCode = WebSocketCloseCode.VIOLATED;
@@ -779,7 +770,7 @@ class ReadingThread extends WebSocketThread
         mContinuation.add(frame);
 
         // If the frame is not the last one for the continuation.
-        if (frame.getFin() == false)
+        if (!frame.getFin())
         {
             // Keep reading.
             return true;
@@ -867,11 +858,7 @@ class ReadingThread extends WebSocketThread
             // Return the concatenated byte array.
             return baos.toByteArray();
         }
-        catch (IOException e)
-        {
-            cause = e;
-        }
-        catch (OutOfMemoryError e)
+        catch (IOException | OutOfMemoryError e)
         {
             cause = e;
         }
@@ -952,7 +939,7 @@ class ReadingThread extends WebSocketThread
         callOnTextFrame(frame);
 
         // If the frame indicates the start of fragmentation.
-        if (frame.getFin() == false)
+        if (!frame.getFin())
         {
             // Start a continuation sequence.
             mContinuation.add(frame);
@@ -979,7 +966,7 @@ class ReadingThread extends WebSocketThread
         callOnBinaryFrame(frame);
 
         // If the frame indicates the start of fragmentation.
-        if (frame.getFin() == false)
+        if (!frame.getFin())
         {
             // Start a continuation sequence.
             mContinuation.add(frame);
@@ -1098,7 +1085,7 @@ class ReadingThread extends WebSocketThread
             return;
         }
 
-        WebSocketFrame frame = null;
+        WebSocketFrame frame;
 
         // Schedule a task which calls Socket.close() to prevent
         // the code below from looping forever.

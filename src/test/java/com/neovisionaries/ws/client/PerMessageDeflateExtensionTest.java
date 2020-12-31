@@ -16,12 +16,12 @@
 package com.neovisionaries.ws.client;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 
 public class PerMessageDeflateExtensionTest
@@ -104,7 +104,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test004()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; unknown_parameter");
@@ -144,7 +144,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test008()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; server_max_window_bits=7");
@@ -154,7 +154,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test009()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; server_max_window_bits=16");
@@ -164,7 +164,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test010()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; client_max_window_bits");
@@ -174,7 +174,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test011()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; client_max_window_bits=abc");
@@ -184,7 +184,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test012()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; client_max_window_bits=0");
@@ -204,7 +204,7 @@ public class PerMessageDeflateExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test014()
     {
         WebSocketException exception = parseInvalid("permessage-deflate; client_max_window_bits=16");

@@ -16,12 +16,13 @@
 package com.neovisionaries.ws.client;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class WebSocketExtensionTest
@@ -42,7 +43,7 @@ public class WebSocketExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test002()
     {
         WebSocketExtension extension = parse("abc; x=1; y=2");
@@ -54,7 +55,7 @@ public class WebSocketExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test003()
     {
         WebSocketExtension extension = parse("abc; x");
@@ -66,7 +67,7 @@ public class WebSocketExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test004()
     {
         WebSocketExtension extension = parse("abc; x=");
@@ -77,7 +78,7 @@ public class WebSocketExtensionTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test005()
     {
         WebSocketExtension extension = parse("abc; x=\"1\"; y=\"2\"");

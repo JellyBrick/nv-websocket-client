@@ -16,17 +16,15 @@
 package com.neovisionaries.ws.client;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class WebSocketFrameTest
 {
-    @Test
+    @org.junit.jupiter.api.Test
     public void test001()
     {
         WebSocketFrame frame = WebSocketFrame.createTextFrame(null);
@@ -35,7 +33,7 @@ public class WebSocketFrameTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test002()
     {
         WebSocketFrame frame = WebSocketFrame.createTextFrame("dummy");
@@ -45,7 +43,7 @@ public class WebSocketFrameTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test003()
     {
         WebSocketFrame frame = WebSocketFrame.createTextFrame("hello");
@@ -54,7 +52,7 @@ public class WebSocketFrameTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test004()
     {
         WebSocketFrame frame = WebSocketFrame.createBinaryFrame(null);
@@ -74,7 +72,7 @@ public class WebSocketFrameTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test006()
     {
         byte[] payload = new byte[] { (byte)0x01, (byte)0x23, (byte)0xAB };
@@ -95,27 +93,27 @@ public class WebSocketFrameTest
 
         frame = list.get(0);
         assertEquals("012", frame.getPayloadText());
-        assertEquals(true,  frame.isTextFrame());
-        assertEquals(false, frame.getFin());
+        assertTrue(frame.isTextFrame());
+        assertFalse(frame.getFin());
 
         frame = list.get(1);
         assertEquals("345", frame.getPayloadText());
-        assertEquals(true,  frame.isContinuationFrame());
-        assertEquals(false, frame.getFin());
+        assertTrue(frame.isContinuationFrame());
+        assertFalse(frame.getFin());
 
         frame = list.get(2);
         assertEquals("678", frame.getPayloadText());
-        assertEquals(true,  frame.isContinuationFrame());
-        assertEquals(false, frame.getFin());
+        assertTrue(frame.isContinuationFrame());
+        assertFalse(frame.getFin());
 
         frame = list.get(3);
         assertEquals("9",   frame.getPayloadText());
-        assertEquals(true,  frame.isContinuationFrame());
-        assertEquals(true,  frame.getFin());
+        assertTrue(frame.isContinuationFrame());
+        assertTrue(frame.getFin());
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test008()
     {
         WebSocketFrame frame = WebSocketFrame.createContinuationFrame("ABCDEF");
@@ -126,22 +124,22 @@ public class WebSocketFrameTest
 
         frame = list.get(0);
         assertEquals("AB",  frame.getPayloadText());
-        assertEquals(true,  frame.isContinuationFrame());
-        assertEquals(false, frame.getFin());
+        assertTrue(frame.isContinuationFrame());
+        assertFalse(frame.getFin());
 
         frame = list.get(1);
         assertEquals("CD",  frame.getPayloadText());
-        assertEquals(true,  frame.isContinuationFrame());
-        assertEquals(false, frame.getFin());
+        assertTrue(frame.isContinuationFrame());
+        assertFalse(frame.getFin());
 
         frame = list.get(2);
         assertEquals("EF",  frame.getPayloadText());
-        assertEquals(true,  frame.isContinuationFrame());
-        assertEquals(false, frame.getFin());
+        assertTrue(frame.isContinuationFrame());
+        assertFalse(frame.getFin());
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test009()
     {
         String payload = "000000000000000000000000000000";
@@ -159,7 +157,7 @@ public class WebSocketFrameTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test010()
     {
         String payload = "000000000000000000000000000000111111111111111111111111111111";

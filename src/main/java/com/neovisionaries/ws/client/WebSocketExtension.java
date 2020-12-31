@@ -53,14 +53,14 @@ public class WebSocketExtension
     public WebSocketExtension(String name)
     {
         // Check the validity of the name.
-        if (Token.isValid(name) == false)
+        if (!Token.isValid(name))
         {
             // The name is not a valid token.
             throw new IllegalArgumentException("'name' is not a valid token.");
         }
 
         mName       = name;
-        mParameters = new LinkedHashMap<String, String>();
+        mParameters = new LinkedHashMap<>();
     }
 
 
@@ -84,7 +84,7 @@ public class WebSocketExtension
         }
 
         mName       = source.getName();
-        mParameters = new LinkedHashMap<String, String>(source.getParameters());
+        mParameters = new LinkedHashMap<>(source.getParameters());
     }
 
 
@@ -167,7 +167,7 @@ public class WebSocketExtension
     public WebSocketExtension setParameter(String key, String value)
     {
         // Check the validity of the key.
-        if (Token.isValid(key) == false)
+        if (!Token.isValid(key))
         {
             // The key is not a valid token.
             throw new IllegalArgumentException("'key' is not a valid token.");
@@ -177,7 +177,7 @@ public class WebSocketExtension
         if (value != null)
         {
             // Check the validity of the value.
-            if (Token.isValid(value) == false)
+            if (!Token.isValid(value))
             {
                 // The value is not a valid token.
                 throw new IllegalArgumentException("'value' is not a valid token.");
@@ -258,7 +258,7 @@ public class WebSocketExtension
         // The first element is the extension name.
         String name = elements[0];
 
-        if (Token.isValid(name) == false)
+        if (!Token.isValid(name))
         {
             // The extension name is not a valid token.
             return null;
@@ -283,7 +283,7 @@ public class WebSocketExtension
             // The name of the parameter.
             String key = pair[0];
 
-            if (Token.isValid(key) == false)
+            if (!Token.isValid(key))
             {
                 // The parameter name is not a valid token.
                 // Ignore this parameter.
@@ -295,7 +295,7 @@ public class WebSocketExtension
 
             if (value != null)
             {
-                if (Token.isValid(value) == false)
+                if (!Token.isValid(value))
                 {
                     // The parameter value is not a valid token.
                     // Ignore this parameter.

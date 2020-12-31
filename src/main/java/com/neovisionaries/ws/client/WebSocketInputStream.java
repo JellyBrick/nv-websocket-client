@@ -110,11 +110,11 @@ class WebSocketInputStream extends FilterInputStream
             }
 
             // Interpret the bytes as a number.
-            payloadLength = (((buffer[0] & 0xFF) << 56) |
-                             ((buffer[1] & 0xFF) << 48) |
-                             ((buffer[2] & 0xFF) << 40) |
-                             ((buffer[3] & 0xFF) << 32) |
-                             ((buffer[4] & 0xFF) << 24) |
+            payloadLength = (((long) (buffer[0] & 0xFF) << 24) |
+                             ((buffer[1] & 0xFF) << 16) |
+                             ((buffer[2] & 0xFF) << 8) |
+                             ((buffer[3] & 0xFF)) |
+                             ((long) (buffer[4] & 0xFF) << 24) |
                              ((buffer[5] & 0xFF) << 16) |
                              ((buffer[6] & 0xFF) <<  8) |
                              ((buffer[7] & 0xFF)      ));
@@ -128,16 +128,6 @@ class WebSocketInputStream extends FilterInputStream
             // Read the masking key. (This should never happen.)
             maskingKey = new byte[4];
             readBytes(maskingKey, 4);
-        }
-
-        if (Integer.MAX_VALUE < payloadLength)
-        {
-            // In Java, the maximum array size is Integer.MAX_VALUE.
-            // Skip the payload and raise an exception.
-            skipQuietly(payloadLength);
-            throw new WebSocketException(
-                WebSocketError.TOO_LONG_PAYLOAD,
-                "The payload length of a frame exceeds the maximum array size in Java.");
         }
 
         // Read the payload if the payload length is not 0.
@@ -181,7 +171,7 @@ class WebSocketInputStream extends FilterInputStream
         {
             skip(length);
         }
-        catch (IOException e)
+        catch (IOException ignored)
         {
         }
     }

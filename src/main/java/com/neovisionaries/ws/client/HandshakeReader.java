@@ -120,7 +120,7 @@ class HandshakeReader
     {
         // Create a map of HTTP headers. Keys are case-insensitive.
         Map<String, List<String>> headers =
-            new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
+                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
         StringBuilder builder = null;
         String line;
@@ -201,13 +201,7 @@ class HandshakeReader
         // Value. (Remove leading and trailing spaces)
         String value = pair[1].trim();
 
-        List<String> list = headers.get(name);
-
-        if (list == null)
-        {
-            list = new ArrayList<String>();
-            headers.put(name, list);
-        }
+        List<String> list = headers.computeIfAbsent(name, k -> new ArrayList<>());
 
         list.add(value);
     }
@@ -438,7 +432,7 @@ class HandshakeReader
             return;
         }
 
-        if (expected.equals(actual) == false)
+        if (!expected.equals(actual))
         {
             // The value of 'Sec-WebSocket-Accept' header is different from the expected one.
             throw new OpeningHandshakeException(
@@ -476,7 +470,7 @@ class HandshakeReader
             return;
         }
 
-        List<WebSocketExtension> extensions = new ArrayList<WebSocketExtension>();
+        List<WebSocketExtension> extensions = new ArrayList<>();
 
         for (String value : values)
         {
@@ -501,7 +495,7 @@ class HandshakeReader
                 String name = extension.getName();
 
                 // If the extension is not contained in the original request from this client.
-                if (mWebSocket.getHandshakeBuilder().containsExtension(name) == false)
+                if (!mWebSocket.getHandshakeBuilder().containsExtension(name))
                 {
                     // The extension contained in the Sec-WebSocket-Extensions header is not supported.
                     throw new OpeningHandshakeException(
@@ -537,7 +531,7 @@ class HandshakeReader
         for (WebSocketExtension extension : extensions)
         {
             // If the extension is not a per-message compression extension.
-            if ((extension instanceof PerMessageCompressionExtension) == false)
+            if (!(extension instanceof PerMessageCompressionExtension))
             {
                 continue;
             }
@@ -598,7 +592,7 @@ class HandshakeReader
 
         // If the protocol is not contained in the original request
         // from this client.
-        if (mWebSocket.getHandshakeBuilder().containsProtocol(protocol) == false)
+        if (!mWebSocket.getHandshakeBuilder().containsProtocol(protocol))
         {
             // The protocol contained in the Sec-WebSocket-Protocol header is not supported.
             throw new OpeningHandshakeException(

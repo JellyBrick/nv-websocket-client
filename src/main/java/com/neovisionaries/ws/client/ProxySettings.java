@@ -100,7 +100,7 @@ public class ProxySettings
     ProxySettings(WebSocketFactory factory)
     {
         mWebSocketFactory = factory;
-        mHeaders = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
+        mHeaders = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
         mSocketFactorySettings = new SocketFactorySettings();
 
         reset();
@@ -631,13 +631,7 @@ public class ProxySettings
             return this;
         }
 
-        List<String> list = mHeaders.get(name);
-
-        if (list == null)
-        {
-            list = new ArrayList<String>();
-            mHeaders.put(name, list);
-        }
+        List<String> list = mHeaders.computeIfAbsent(name, k -> new ArrayList<>());
 
         list.add(value);
 

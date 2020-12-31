@@ -86,7 +86,7 @@ abstract class PeriodicalFrameSender
             return;
         }
 
-        if (mWebSocket.isOpen() == false)
+        if (!mWebSocket.isOpen())
         {
             return;
         }
@@ -105,7 +105,7 @@ abstract class PeriodicalFrameSender
                 }
             }
 
-            if (mScheduled == false)
+            if (!mScheduled)
             {
                 mScheduled = schedule(mTimer, new Task(), interval);
             }
@@ -160,7 +160,7 @@ abstract class PeriodicalFrameSender
     {
         synchronized (this)
         {
-            if (mInterval == 0 || mWebSocket.isOpen() == false)
+            if (mInterval == 0 || !mWebSocket.isOpen())
             {
                 mScheduled = false;
 

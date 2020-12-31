@@ -16,10 +16,10 @@
 package com.neovisionaries.ws.client;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 
 public class TokenTest
@@ -69,7 +69,7 @@ public class TokenTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test004()
     {
         isValid("abc");
@@ -83,14 +83,14 @@ public class TokenTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test006()
     {
         unescape("", "");
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test007()
     {
         unescape("abc", "abc");
@@ -118,14 +118,14 @@ public class TokenTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test011()
     {
         unquote(null, null);
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test012()
     {
         unquote("", "");
@@ -153,7 +153,7 @@ public class TokenTest
     }
 
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void test016()
     {
         unquote("abc\"", "abc\"");

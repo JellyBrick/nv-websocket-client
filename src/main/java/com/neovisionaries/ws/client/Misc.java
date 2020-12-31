@@ -29,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -55,15 +56,7 @@ class Misc
             return null;
         }
 
-        try
-        {
-            return string.getBytes("UTF-8");
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            // This never happens.
-            return null;
-        }
+        return string.getBytes(StandardCharsets.UTF_8);
     }
 
 
@@ -93,15 +86,11 @@ class Misc
 
         try
         {
-            return new String(bytes, offset, length, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            // This never happens.
-            return null;
+            return new String(bytes, offset, length, StandardCharsets.UTF_8);
         }
         catch (IndexOutOfBoundsException e)
         {
+            // This never happens.
             return null;
         }
     }
@@ -251,11 +240,9 @@ class Misc
     {
         int min = Integer.MAX_VALUE;
 
-        for (int i = 0; i < values.length; ++i)
-        {
-            if (values[i] < min)
-            {
-                min = values[i];
+        for (int value : values) {
+            if (value < min) {
+                min = value;
             }
         }
 
@@ -270,11 +257,9 @@ class Misc
     {
         int max = Integer.MIN_VALUE;
 
-        for (int i = 0; i < values.length; ++i)
-        {
-            if (max < values[i])
-            {
-                max = values[i];
+        for (int value : values) {
+            if (max < value) {
+                max = value;
             }
         }
 
@@ -357,7 +342,7 @@ class Misc
         Matcher matcher = Pattern.compile("^(.*@)?([^:]+)(:\\d+)?$").matcher(authority);
 
         // If the authority part does not match the expected format.
-        if (matcher == null || matcher.matches() == false)
+        if (!matcher.matches())
         {
             // Hmm... This should not happen.
             return null;
@@ -380,7 +365,7 @@ class Misc
         Matcher matcher = Pattern.compile("^\\w+://([^@/]*@)?([^:/]+)(:\\d+)?(/.*)?$").matcher(uri);
 
         // If the URI does not match the expected format.
-        if (matcher == null || matcher.matches() == false)
+        if (!matcher.matches())
         {
             // Hmm... This should not happen.
             return null;

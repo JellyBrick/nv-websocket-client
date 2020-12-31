@@ -614,9 +614,8 @@ public class WebSocketFrame
         }
 
         // A close code is encoded in network byte order.
-        int closeCode = (((mPayload[0] & 0xFF) << 8) | (mPayload[1] & 0xFF));
 
-        return closeCode;
+        return (((mPayload[0] & 0xFF) << 8) | (mPayload[1] & 0xFF));
     }
 
 
@@ -745,9 +744,8 @@ public class WebSocketFrame
             return;
         }
 
-        for (int i = 0; i < mPayload.length; ++i)
-        {
-            builder.append(String.format("%02X ", (0xFF & mPayload[i])));
+        for (byte b : mPayload) {
+            builder.append(String.format("%02X ", (0xFF & b)));
         }
 
         if (mPayload.length != 0)
@@ -1069,15 +1067,15 @@ public class WebSocketFrame
         }
 
         // If the frame is neither a TEXT frame nor a BINARY frame.
-        if (frame.isTextFrame()   == false &&
-            frame.isBinaryFrame() == false)
+        if (!frame.isTextFrame() &&
+                !frame.isBinaryFrame())
         {
             // No compression.
             return frame;
         }
 
         // If the frame is not the final frame.
-        if (frame.getFin() == false)
+        if (!frame.getFin())
         {
             // The compression must be applied to this frame and
             // all the subsequent continuation frames, but the
@@ -1178,7 +1176,7 @@ public class WebSocketFrame
                 return null;
             }
         }
-        else if (frame.isContinuationFrame() == false)
+        else if (!frame.isContinuationFrame())
         {
             // Control frames (Close/Ping/Pong) are not split.
             return null;
@@ -1195,7 +1193,7 @@ public class WebSocketFrame
         byte[] originalPayload = frame.getPayload();
         boolean originalFin    = frame.getFin();
 
-        List<WebSocketFrame> frames = new ArrayList<WebSocketFrame>();
+        List<WebSocketFrame> frames = new ArrayList<>();
 
         // Generate the first frame using the existing WebSocketFrame instance.
         // Note that the reserved bit 1 and the opcode are untouched.

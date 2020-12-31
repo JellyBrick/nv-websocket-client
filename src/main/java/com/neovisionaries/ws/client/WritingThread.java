@@ -42,7 +42,7 @@ class WritingThread extends WebSocketThread
     {
         super("WritingThread", websocket, ThreadType.WRITING_THREAD);
 
-        mFrames = new LinkedList<WebSocketFrame>();
+        mFrames = new LinkedList<>();
         mPMCE   = websocket.getPerMessageCompressionExtension();
     }
 
@@ -189,7 +189,7 @@ class WritingThread extends WebSocketThread
                     // Wait until the queue gets spaces.
                     wait();
                 }
-                catch (InterruptedException e)
+                catch (InterruptedException ignored)
                 {
                 }
             }
@@ -230,7 +230,7 @@ class WritingThread extends WebSocketThread
         for (WebSocketFrame f : mFrames)
         {
             // If a non high-priority frame was found.
-            if (isHighPriorityFrame(f) == false)
+            if (!isHighPriorityFrame(f))
             {
                 break;
             }
@@ -260,7 +260,7 @@ class WritingThread extends WebSocketThread
         {
             flush();
         }
-        catch (IOException e)
+        catch (IOException ignored)
         {
         }
     }
@@ -304,7 +304,7 @@ class WritingThread extends WebSocketThread
                     // or this thread is requested to stop.
                     wait();
                 }
-                catch (InterruptedException e)
+                catch (InterruptedException ignored)
                 {
                 }
             }
@@ -369,7 +369,7 @@ class WritingThread extends WebSocketThread
             }
 
             // If flush is not needed.
-            if (isFlushNeeded(last) == false)
+            if (!isFlushNeeded(last))
             {
                 // Try to consume the next frame without flush.
                 continue;

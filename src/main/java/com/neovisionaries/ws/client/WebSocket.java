@@ -233,7 +233,7 @@ import com.neovisionaries.ws.client.StateManager.CloseInitiator;
  * <blockquote>
  * <pre style="border-left: solid 5px lightgray;"> <span style="color: green;">// Register a listener to receive WebSocket events.</span>
  * ws.{@link #addListener(WebSocketListener) addListener}(new {@link
- * WebSocketAdapter#WebSocketAdapter() WebSocketAdapter()} {
+ * WebSocketAdapter WebSocketAdapter()} {
  *     <span style="color: gray;">{@code @}Override</span>
  *     public void {@link WebSocketListener#onTextMessage(WebSocket, String)
  *     onTextMessage}(WebSocket websocket, String message) throws Exception {
@@ -1125,7 +1125,7 @@ public class WebSocket
     private int mFrameQueueSize;
     private int mMaxPayloadSize;
     private boolean mOnConnectedCalled;
-    private Object mOnConnectedCalledLock = new Object();
+    private final Object mOnConnectedCalledLock = new Object();
     private boolean mReadingThreadStarted;
     private boolean mWritingThreadStarted;
     private boolean mReadingThreadFinished;
@@ -3680,7 +3680,7 @@ public class WebSocket
             mReadingThreadFinished = true;
             mServerCloseFrame = closeFrame;
 
-            if (mWritingThreadFinished == false)
+            if (!mWritingThreadFinished)
             {
                 // Wait for the writing thread to finish.
                 return;
@@ -3702,7 +3702,7 @@ public class WebSocket
             mWritingThreadFinished = true;
             mClientCloseFrame = closeFrame;
 
-            if (mReadingThreadFinished == false)
+            if (!mReadingThreadFinished)
             {
                 // Wait for the reading thread to finish.
                 return;

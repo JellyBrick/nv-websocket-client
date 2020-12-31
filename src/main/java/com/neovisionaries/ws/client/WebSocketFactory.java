@@ -788,8 +788,7 @@ public class WebSocketFactory
 
 
     private SocketConnector createRawSocket(
-            String host, int port, boolean secure, int timeout) throws IOException
-    {
+            String host, int port, boolean secure, int timeout) {
         // Determine the port number. Especially, if 'port' is -1,
         // it is converted to 80 or 443.
         port = determinePort(port, secure);
@@ -832,7 +831,7 @@ public class WebSocketFactory
 
         // SSLSocketFactory for SSL handshake with the WebSocket endpoint.
         SSLSocketFactory sslSocketFactory = secure ?
-                (SSLSocketFactory)mSocketFactorySettings.selectSocketFactory(secure) : null;
+                (SSLSocketFactory)mSocketFactorySettings.selectSocketFactory(true) : null;
 
         // Create an instance that will execute the task to connect to the server later.
         return new SocketConnector(

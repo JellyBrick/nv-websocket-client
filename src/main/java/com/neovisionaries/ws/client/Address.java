@@ -16,9 +16,6 @@
 package com.neovisionaries.ws.client;
 
 
-import java.net.InetSocketAddress;
-
-
 class Address
 {
     private final String mHost;

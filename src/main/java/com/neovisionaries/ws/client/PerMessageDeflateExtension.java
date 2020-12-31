@@ -259,7 +259,7 @@ class PerMessageDeflateExtension extends PerMessageCompressionExtension
     @Override
     protected byte[] compress(byte[] plain) throws WebSocketException
     {
-        if (canCompress(plain) == false)
+        if (!canCompress(plain))
         {
             // Compression should not be performed.
             return plain;
@@ -333,16 +333,12 @@ class PerMessageDeflateExtension extends PerMessageCompressionExtension
         // bigger distances than the agreed sliding window size if the size
         // of the original plain data is less than the agreed sliding window
         // size.
-        if (plain.length < mClientWindowSize)
-        {
-            // Can be compressed.
-            return true;
-        }
+        // Can be compressed.
+        return plain.length < mClientWindowSize;
 
         // Cannot exclude the possibility that Huffman codes in compressed
         // data may refer to bigger distances than the agreed sliding window
         // size. Therefore, compression should not be performed.
-        return false;
     }
 
 

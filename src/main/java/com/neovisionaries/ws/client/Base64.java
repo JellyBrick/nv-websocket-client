@@ -60,10 +60,7 @@ class Base64
             builder.append((char)INDEX_TABLE[bits]);
         }
 
-        for (int i = builder.length(); i < capacity; ++i)
-        {
-            builder.append('=');
-        }
+        builder.append("=".repeat(Math.max(0, capacity - builder.length())));
 
         return builder.toString();
     }

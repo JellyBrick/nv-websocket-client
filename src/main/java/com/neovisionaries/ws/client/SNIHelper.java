@@ -44,8 +44,7 @@ class SNIHelper
     }
 
 
-    private static void initialize() throws Exception
-    {
+    private static void initialize() {
         // Constructor which represents javax.net.ssl.SNIHostName(String).
         // The class is available since Java 1.8 / Android API Level 24 (Android 7.0)
         sSNIHostNameConstructor = Misc.getConstructor(
@@ -67,7 +66,7 @@ class SNIHelper
 
     private static List<Object> createSNIHostNames(String[] hostnames)
     {
-        List<Object> list = new ArrayList<Object>(hostnames.length);
+        List<Object> list = new ArrayList<>(hostnames.length);
 
         // Create a list of SNIHostName from the String array.
         for (String hostname : hostnames)
@@ -89,7 +88,7 @@ class SNIHelper
 
     static void setServerNames(Socket socket, String[] hostnames)
     {
-        if ((socket instanceof SSLSocket) == false)
+        if (!(socket instanceof SSLSocket))
         {
             return;
         }

@@ -47,13 +47,9 @@ public interface WebSocketListener
      * @param newState
      *         The new state of the WebSocket.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 1.1
      */
-    void onStateChanged(WebSocket websocket, WebSocketState newState) throws Exception;
+    void onStateChanged(WebSocket websocket, WebSocketState newState);
 
 
     /**
@@ -68,11 +64,8 @@ public interface WebSocketListener
      *         Note that the comparator used by the map is {@link
      *         String#CASE_INSENSITIVE_ORDER}.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onConnected(WebSocket websocket, Map<String, List<String>> headers) throws Exception;
+    void onConnected(WebSocket websocket, Map<String, List<String>> headers);
 
 
     /**
@@ -93,13 +86,9 @@ public interface WebSocketListener
      *         The exception thrown by {@link WebSocket#connect() connect()}
      *         method.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 1.8
      */
-    void onConnectError(WebSocket websocket, WebSocketException cause) throws Exception;
+    void onConnectError(WebSocket websocket, WebSocketException cause);
 
 
     /**
@@ -122,13 +111,10 @@ public interface WebSocketListener
      *         {@code true} if the closing handshake was started by the server.
      *         {@code false} if the closing handshake was started by the client.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
     void onDisconnected(WebSocket websocket,
         WebSocketFrame serverCloseFrame, WebSocketFrame clientCloseFrame,
-        boolean closedByServer) throws Exception;
+        boolean closedByServer);
 
 
     /**
@@ -141,11 +127,8 @@ public interface WebSocketListener
      * @param frame
      *         The frame.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -157,11 +140,8 @@ public interface WebSocketListener
      * @param frame
      *         The continuation frame.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onContinuationFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onContinuationFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -173,11 +153,8 @@ public interface WebSocketListener
      * @param frame
      *         The text frame.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onTextFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onTextFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -189,11 +166,8 @@ public interface WebSocketListener
      * @param frame
      *         The binary frame.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onBinaryFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onBinaryFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -206,11 +180,8 @@ public interface WebSocketListener
      * @param frame
      *         The <a href="https://tools.ietf.org/html/rfc6455#section-5.5.1">close frame</a>.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onCloseFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onCloseFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -223,11 +194,8 @@ public interface WebSocketListener
      * @param frame
      *         The <a href="https://tools.ietf.org/html/rfc6455#section-5.5.2">ping frame</a>.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onPingFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onPingFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -240,11 +208,8 @@ public interface WebSocketListener
      * @param frame
      *         The <a href="https://tools.ietf.org/html/rfc6455#section-5.5.3">pong frame</a>.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onPongFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onPongFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -262,11 +227,8 @@ public interface WebSocketListener
      * @param text
      *         The text message.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onTextMessage(WebSocket websocket, String text) throws Exception;
+    void onTextMessage(WebSocket websocket, String text);
 
 
     /**
@@ -280,13 +242,9 @@ public interface WebSocketListener
      * @param data
      *         The UTF-8 byte sequence of the text message.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 2.6
      */
-    void onTextMessage(WebSocket websocket, byte[] data) throws Exception;
+    void onTextMessage(WebSocket websocket, byte[] data);
 
 
     /**
@@ -298,11 +256,8 @@ public interface WebSocketListener
      * @param binary
      *         The binary message.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onBinaryMessage(WebSocket websocket, byte[] binary) throws Exception;
+    void onBinaryMessage(WebSocket websocket, byte[] binary);
 
 
     /**
@@ -314,13 +269,9 @@ public interface WebSocketListener
      * @param frame
      *         The WebSocket frame to be sent.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 1.15
      */
-    void onSendingFrame(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onSendingFrame(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -333,11 +284,8 @@ public interface WebSocketListener
      * @param frame
      *         The sent frame.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onFrameSent(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onFrameSent(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -357,11 +305,8 @@ public interface WebSocketListener
      * @param frame
      *         The unsent frame.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onFrameUnsent(WebSocket websocket, WebSocketFrame frame) throws Exception;
+    void onFrameUnsent(WebSocket websocket, WebSocketFrame frame);
 
 
     /**
@@ -377,13 +322,9 @@ public interface WebSocketListener
      * @param thread
      *         The newly created thread instance.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 2.0
      */
-    void onThreadCreated(WebSocket websocket, ThreadType threadType, Thread thread) throws Exception;
+    void onThreadCreated(WebSocket websocket, ThreadType threadType, Thread thread);
 
 
     /**
@@ -398,13 +339,9 @@ public interface WebSocketListener
      * @param thread
      *         The thread instance.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 2.0
      */
-    void onThreadStarted(WebSocket websocket, ThreadType threadType, Thread thread) throws Exception;
+    void onThreadStarted(WebSocket websocket, ThreadType threadType, Thread thread);
 
 
     /**
@@ -419,13 +356,9 @@ public interface WebSocketListener
      * @param thread
      *         The thread instance.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 2.0
      */
-    void onThreadStopping(WebSocket websocket, ThreadType threadType, Thread thread) throws Exception;
+    void onThreadStopping(WebSocket websocket, ThreadType threadType, Thread thread);
 
 
     /**
@@ -438,11 +371,8 @@ public interface WebSocketListener
      * @param cause
      *         An exception that represents the error.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onError(WebSocket websocket, WebSocketException cause) throws Exception;
+    void onError(WebSocket websocket, WebSocketException cause);
 
 
     /**
@@ -478,11 +408,8 @@ public interface WebSocketListener
      *         The WebSocket frame. If this is not {@code null}, it means that
      *         verification of the frame failed.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onFrameError(WebSocket websocket, WebSocketException cause, WebSocketFrame frame) throws Exception;
+    void onFrameError(WebSocket websocket, WebSocketException cause, WebSocketFrame frame);
 
 
     /**
@@ -501,11 +428,8 @@ public interface WebSocketListener
      *         is either a text frame and a binary frame, and the other
      *         frames are continuation frames.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onMessageError(WebSocket websocket, WebSocketException cause, List<WebSocketFrame> frames) throws Exception;
+    void onMessageError(WebSocket websocket, WebSocketException cause, List<WebSocketFrame> frames);
 
 
     /**
@@ -520,13 +444,9 @@ public interface WebSocketListener
      * @param compressed
      *         The compressed message that failed to be decompressed.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 1.16
      */
-    void onMessageDecompressionError(WebSocket websocket, WebSocketException cause, byte[] compressed) throws Exception;
+    void onMessageDecompressionError(WebSocket websocket, WebSocketException cause, byte[] compressed);
 
 
     /**
@@ -542,11 +462,8 @@ public interface WebSocketListener
      * @param data
      *         The payload data that failed to be converted to a string.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onTextMessageError(WebSocket websocket, WebSocketException cause, byte[] data) throws Exception;
+    void onTextMessageError(WebSocket websocket, WebSocketException cause, byte[] data);
 
 
     /**
@@ -564,11 +481,8 @@ public interface WebSocketListener
      *         when the error code of the exception is {@link
      *         WebSocketError#FLUSH_ERROR FLUSH_ERROR}.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onSendError(WebSocket websocket, WebSocketException cause, WebSocketFrame frame) throws Exception;
+    void onSendError(WebSocket websocket, WebSocketException cause, WebSocketFrame frame);
 
 
     /**
@@ -582,11 +496,8 @@ public interface WebSocketListener
      * @param cause
      *         The cause of the error.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
      */
-    void onUnexpectedError(WebSocket websocket, WebSocketException cause) throws Exception;
+    void onUnexpectedError(WebSocket websocket, WebSocketException cause);
 
 
     /**
@@ -598,13 +509,9 @@ public interface WebSocketListener
      * @param cause
      *         The {@code Throwable} an <code>on<i>Xxx</i></code> method threw.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is just ignored.
-     *
      * @since 1.9
      */
-    void handleCallbackError(WebSocket websocket, Throwable cause) throws Exception;
+    void handleCallbackError(WebSocket websocket, Throwable cause);
 
 
     /**
@@ -619,11 +526,7 @@ public interface WebSocketListener
      * @param headers
      *         The HTTP headers.
      *
-     * @throws Exception
-     *         An exception thrown by an implementation of this method.
-     *         The exception is passed to {@link #handleCallbackError(WebSocket, Throwable)}.
-     *
      * @since 1.21
      */
-    void onSendingHandshake(WebSocket websocket, String requestLine, List<String[]> headers) throws Exception;
+    void onSendingHandshake(WebSocket websocket, String requestLine, List<String[]> headers);
 }

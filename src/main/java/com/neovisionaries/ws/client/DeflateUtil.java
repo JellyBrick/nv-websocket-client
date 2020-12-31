@@ -16,12 +16,14 @@
 package com.neovisionaries.ws.client;
 
 
+import java.util.Arrays;
+
 /**
  * Utility methods for DEFLATE (<a href="http://tools.ietf.org/html/rfc1951">RFC 1951</a>).
  */
 class DeflateUtil
 {
-    private static int[] INDICES_FROM_CODE_LENGTH_ORDER =
+    private static final int[] INDICES_FROM_CODE_LENGTH_ORDER =
         { 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 };
 
 
@@ -83,7 +85,7 @@ class DeflateUtil
 
 
     private static void readCodeLengths(
-            ByteArray input, int bitIndex[], int[] codeLengths,
+            ByteArray input, int[] bitIndex, int[] codeLengths,
             Huffman codeLengthHuffman) throws FormatException
     {
         // 3.2.7 Compression with dynamic Huffman codes (BTYPE=10)
@@ -131,7 +133,7 @@ class DeflateUtil
                     // Bad code length.
                     String message = String.format(
                             "[%s] Bad code length '%d' at the bit index '%d'.",
-                            DeflateUtil.class.getSimpleName(), codeLength, bitIndex);
+                            DeflateUtil.class.getSimpleName(), codeLength, Arrays.toString(bitIndex));
 
                     throw new FormatException(message);
             }

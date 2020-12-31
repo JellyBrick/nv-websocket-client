@@ -80,7 +80,7 @@ public class SocketInitiator {
         private final SocketFuture mFuture;
         private final SocketFactory mSocketFactory;
         private final SocketAddress mSocketAddress;
-        private String[] mServerNames;
+        private final String[] mServerNames;
         private final int mConnectTimeout;
         private final Signal mStartSignal;
         private final Signal mDoneSignal;
@@ -337,7 +337,7 @@ public class SocketInitiator {
         SocketFuture future = new SocketFuture();
 
         // Create socket racer for each IP address.
-        List<SocketRacer> racers = new ArrayList<SocketRacer>(addresses.length);
+        List<SocketRacer> racers = new ArrayList<>(addresses.length);
         int delay = 0;
         Signal startSignal = null;
         for (InetAddress address: addresses)

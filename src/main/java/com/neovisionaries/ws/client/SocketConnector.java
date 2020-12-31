@@ -140,20 +140,14 @@ class SocketConnector
             addresses = InetAddress.getAllByName(mAddress.getHostname());
 
             // Sort addresses: IPv6 first, then IPv4.
-            Arrays.sort(addresses, new Comparator<InetAddress>() {
-                public int compare(InetAddress left, InetAddress right) {
-                    if (left.getClass() == right.getClass())
-                    {
-                        return 0;
-                    }
-                    if (left instanceof Inet6Address)
-                    {
-                        return -1;
-                    }
-                    else
-                    {
-                        return 1;
-                    }
+            Arrays.sort(addresses, (left, right) -> {
+                if (left.getClass() == right.getClass()) {
+                    return 0;
+                }
+                if (left instanceof Inet6Address) {
+                    return -1;
+                } else {
+                    return 1;
                 }
             });
         }
@@ -258,7 +252,7 @@ class SocketConnector
 
     private void verifyHostname(SSLSocket socket, String hostname) throws HostnameUnverifiedException
     {
-        if (mVerifyHostname == false)
+        if (!mVerifyHostname)
         {
             // Skip hostname verification.
             return;
