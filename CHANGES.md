@@ -1,6 +1,33 @@
 CHANGES
 =======
 
+2.14 (2021-03-16)
+-----------------
+
+- `WebSocketFactory` class
+    * Added `getSocketTimeout()` method. (PR #214)
+    * Added `setSocketTimeout(int)` method. (PR #214)
+
+
+2.13 (2021-02-27)
+-----------------
+
+- PR #225 : Fixed SSL handshake failure on Android versions below Nougat (Version 7/SDK 24)
+  when connecting to WSS endpoints
+
+
+2.12 (2021-02-10)
+-----------------
+
+- PR #222 that fixes bugs reported by #220 and #221.
+
+
+2.11 (2021-01-22)
+-----------------
+
+- Performance improvement of write operation. (PR #217)
+
+
 2.10 (2020-07-21)
 -----------------
 
