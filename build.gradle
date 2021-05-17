@@ -23,5 +23,5 @@ compileJava {
 
 dependencies {
     // Use JUnit test framework.
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.2'
 }
